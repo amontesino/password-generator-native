@@ -1,5 +1,6 @@
 import { characters } from '@/assets/characters';
 import Slider from '@react-native-community/slider';
+import * as Clipboard from 'expo-clipboard';
 import { useState } from 'react';
 import { Button, StyleSheet, Text, View } from "react-native";
 import ToggleSwitch from 'toggle-switch-react-native';
@@ -28,6 +29,7 @@ export default function Index() {
     }
 
     setPassword(password);
+    Clipboard.setStringAsync(password);
   }
 
   return (
@@ -87,7 +89,10 @@ export default function Index() {
       </View>
       <Button 
         title='generate password'
-        onPress={genPass}
+        onPress={() => {
+          genPass()
+          // copyPassword()
+        }}
       />
       {showPass ? <View style={styles.passField}>
         <Text>{password}</Text>
@@ -106,6 +111,9 @@ const styles = StyleSheet.create({
   switchLine: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // marginBottom: '0.5em'
   },
   passField: {
     backgroundColor: 'purple',
