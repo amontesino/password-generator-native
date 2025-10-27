@@ -1,10 +1,34 @@
+import { characters } from '@/assets/characters';
 import Slider from '@react-native-community/slider';
 import { useState } from 'react';
-import { Button, StyleSheet, Switch, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
+import ToggleSwitch from 'toggle-switch-react-native';
 
 export default function Index() {
   const [length, setLength] = useState(20);
   const [numberCheck, setNumberCheck] = useState(false);
+  const [symbolCheck, setSymbolCheck] = useState(false);
+  const [showPass, setShowPass] = useState(false);
+  const [password, setPassword] = useState('')
+
+  function genPass() {
+    let selectedChars = characters.slice(0, 52);
+    let password = '';
+
+    if (numberCheck) {
+      selectedChars = selectedChars.concat(characters.slice(52, 62));
+    };
+
+    if (symbolCheck) {
+      selectedChars = selectedChars.concat(characters.slice(62));
+    }
+
+    for (let i = 0; i < length; i++) {
+      password += selectedChars[Math.floor(Math.random() * selectedChars.length)];
+    }
+
+    setPassword(password);
+  }
 
   return (
     <View
@@ -26,23 +50,48 @@ export default function Index() {
       />
       <Text>Password length: {length}</Text>
       <View style={styles.switchLine}>
-        <Switch />
+        {/* <Switch 
+          // value={numberCheck}
+          // onValueChange={(prev) => setNumberCheck(!prev)}
+          // disabled={false}
+          // style={{width: 50, height: 50}}
+        /> */}
+        <ToggleSwitch
+          isOn={numberCheck}
+          onToggle={isOn => {
+            console.log("changed to " + isOn)
+            setNumberCheck(isOn)
+          }}
+        />
         <Text>Numbers?</Text>
       </View>
       <View style={styles.switchLine}>
-        <Switch />
+        <ToggleSwitch
+          isOn={symbolCheck}
+          onToggle={isOn => {
+            console.log("changed to " + isOn)
+            setSymbolCheck(isOn)
+          }}
+        />
         <Text>Symbols?</Text>
       </View>
       <View style={styles.switchLine}>
-        <Switch />
+        <ToggleSwitch
+          isOn={showPass}
+          onToggle={isOn => {
+            console.log("changed to " + isOn)
+            setShowPass(isOn)
+          }}
+        />
         <Text>Show password?</Text>
       </View>
       <Button 
         title='generate password'
+        onPress={genPass}
       />
-      <View style={styles.passField}>
-        password
-      </View>
+      {showPass ? <View style={styles.passField}>
+        <Text>{password}</Text>
+      </View> : ''}
     </View>
   );
 }
