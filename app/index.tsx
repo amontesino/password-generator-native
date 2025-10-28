@@ -34,23 +34,19 @@ export default function Index() {
 
   return (
     <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      style={styles.main}
     >
-      <Text style={[styles.h1]}>Generate a</Text>
-      <Text style={[styles.purple, styles.h1]}>random password</Text>
+      <Text style={[styles.purple, styles.h1]}>password generator.</Text>
       <Slider
         style={{width: 200, height: 40}}
         minimumValue={8}
         maximumValue={32}
         onValueChange={(e) => setLength(Math.round(e))}
-        minimumTrackTintColor='purple'
-        thumbTintColor='purple'
+        minimumTrackTintColor='#967bb6'
+        maximumTrackTintColor='white'
+        thumbTintColor='#967bb6'
       />
-      <Text>Password length: {length}</Text>
+      <Text style={styles.text}>Password length: {length}</Text>
       <View style={styles.switchLine}>
         {/* <Switch 
           // value={numberCheck}
@@ -64,8 +60,10 @@ export default function Index() {
             console.log("changed to " + isOn)
             setNumberCheck(isOn)
           }}
+          onColor='#967bb6'
+          offColor='#333333'
         />
-        <Text>Numbers?</Text>
+        <Text style={styles.text}>Numbers?</Text>
       </View>
       <View style={styles.switchLine}>
         <ToggleSwitch
@@ -74,8 +72,10 @@ export default function Index() {
             console.log("changed to " + isOn)
             setSymbolCheck(isOn)
           }}
-        />
-        <Text>Symbols?</Text>
+          onColor='#967bb6'
+          offColor='#333333'
+      />
+        <Text style={styles.text}>Symbols?</Text>
       </View>
       <View style={styles.switchLine}>
         <ToggleSwitch
@@ -84,8 +84,10 @@ export default function Index() {
             console.log("changed to " + isOn)
             setShowPass(isOn)
           }}
+          onColor='#967bb6'
+          offColor='#333333'
         />
-        <Text>Show password?</Text>
+        <Text style={styles.text}>Show password?</Text>
       </View>
       <Button 
         title='generate password'
@@ -93,30 +95,48 @@ export default function Index() {
           genPass()
           // copyPassword()
         }}
+        color="#967bb6"
       />
       {showPass ? <View style={styles.passField}>
-        <Text>{password}</Text>
+        <Text style={styles.text}>{password}</Text>
       </View> : ''}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 40,
+    backgroundColor: 'black'
+  },
   purple: {
-    color: "purple"
+    color: '#967bb6'
   },
   h1: {
-    fontSize: 24
+    fontSize: 32,
+    fontWeight: 'bold'
+  },
+  text: {
+    color: 'white'
   },
   switchLine: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // marginBottom: '0.5em'
+    marginBottom: 10,
+    width: "60%"
   },
   passField: {
-    backgroundColor: 'purple',
-    color: 'white'
+    backgroundColor: '#967bb6',
+    width: '80%',
+    maxHeight: 60,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    marginTop: 10
   }
 })
