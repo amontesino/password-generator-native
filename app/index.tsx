@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     alignItems: "center",
-    marginTop: 40,
+    paddingTop: 40,
     backgroundColor: 'black'
   },
   purple: {
